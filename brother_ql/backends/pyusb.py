@@ -43,7 +43,7 @@ def list_available_devices():
             return False
 
     # only Brother printers
-    printers = usb.core.find(find_all=1, custom_match=find_class(7), idVendor=0x04f9)
+printers = usb.core.find(find_all=1, custom_match=find_class(0), idVendor=0x04f9)
 
     def identifier(dev):
         try:
@@ -101,7 +101,7 @@ class BrotherQLBackendPyUSB(BrotherQLBackendGeneric):
         self.dev.set_configuration()
 
         cfg = self.dev.get_active_configuration()
-        intf = usb.util.find_descriptor(cfg, bInterfaceClass=7)
+        intf = usb.util.find_descriptor(cfg)
         assert intf is not None
 
         ep_match_in  = lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_IN
